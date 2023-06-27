@@ -36,9 +36,16 @@ def Sign_In():
 def ValidateUserCredentials(username, password):
     usernamefound = BooleanVar()
     while usernamefound == False:
-        for i in range(len(usernamelist)):
-            if username != usernamelist[i]:
+        for i in range(len(read("Usernames.txt"))):
+            if username != read("Usernames.txt")[i]:
                 usernnamefound = True
+                password_number = i
+            else:
+                return ("unkown username")
+    if password == read("Passwords.txt")[password_number]:
+        return ("correct")
+    else:
+        return ("unknown password")
 
 
 def write(info_to_write):
@@ -50,11 +57,10 @@ def write(info_to_write):
 def read(file_to_read):
     """opens a file and reads and prints it"""
     with open(file_to_read, "r", encoding="utf-8") as f:
-        contents = f.read()
+        contents = f.readlines()
         print(contents)
-        f.readlines = linelist
-        print(linelist)
-        print(len(linelist))
+        print(len(contents))
+    return (contents)
 
 
 # defining and configuring the outcome frame
@@ -69,11 +75,6 @@ UsernameLabel.grid(row=0, column=0)
 PasswordLabel = Label(signIn_menu, text="Password")
 PasswordLabel.grid(row=1, column=0)
 
-SubmitInformationButton = Button(signIn_menu, text="Submit", activebackground="pink", activeforeground="blue",
-                                 command=lambda ValidateUserCredentials: (UsernameStringVar, PasswordStringVar))
-SubmitInformationButton.grid(row=3, column=2)
-
-
 UsernameStringVar = StringVar()
 EntryBox1 = Entry(signIn_menu, textvariable=UsernameStringVar, width=20)
 EntryBox1.grid(row=0, column=3)
@@ -82,7 +83,12 @@ PasswordStringVar = StringVar()
 EntryBox2 = Entry(signIn_menu, textvariable=PasswordStringVar, width=20)
 EntryBox2.grid(row=2, column=3)
 
+SubmitInformationButton = Button(signIn_menu, text="Submit", activebackground="pink", activeforeground="blue",
+                                 command=ValidateUserCredentials(UsernameStringVar, PasswordStringVar))
+SubmitInformationButton.grid(row=3, column=2)
+
+
 write("doesthiswork")
-read("BigProjectText.txt")
+read()
 # test
 root.mainloop()
