@@ -34,23 +34,34 @@ def Sign_In():
 
 
 def ValidateUserCredentials(username, password):
-    usernamefound = BooleanVar()
+    usernamefound = False
     while usernamefound == False:
+        print("bad")
         for i in range(len(read("Usernames.txt"))):
+
             if username != read("Usernames.txt")[i]:
-                usernnamefound = True
                 password_number = i
+                if password == read("Passwords.txt")[password_number]:
+                    usernamefound = True
+                    return ("correct")
+                else:
+                    open_popup("Unknown Password", "error")
+                    break
             else:
-                return ("unkown username")
-    if password == read("Passwords.txt")[password_number]:
-        return ("correct")
-    else:
-        return ("unknown password")
+                open_popup("Unknown Username", "error")
+                break
 
 
-def write(info_to_write):
+def open_popup(message, title):
+    top = Toplevel(root)
+    top.geometry("750x250")
+    top.title(title)
+    Label(top, text=message).grid(row=1, column=1)
+
+
+def write(info_to_write, file_to_write_to):
     """opens a file and writs into it"""
-    with open("BigProjectText.txt", "w", encoding="utf-8") as file_to_open:
+    with open(file_to_write_to, "w", encoding="utf-8") as file_to_open:
         file_to_open.write(info_to_write)
 
 
@@ -61,6 +72,10 @@ def read(file_to_read):
         print(contents)
         print(len(contents))
     return (contents)
+
+
+write("", "Passwords.txt")
+write("", "Usernames.txt")
 
 
 # defining and configuring the outcome frame
@@ -84,11 +99,8 @@ EntryBox2 = Entry(signIn_menu, textvariable=PasswordStringVar, width=20)
 EntryBox2.grid(row=2, column=3)
 
 SubmitInformationButton = Button(signIn_menu, text="Submit", activebackground="pink", activeforeground="blue",
-                                 command=ValidateUserCredentials(UsernameStringVar, PasswordStringVar))
+                                 command=lambda: ValidateUserCredentials(UsernameStringVar, PasswordStringVar))
 SubmitInformationButton.grid(row=3, column=2)
 
-
-write("doesthiswork")
-read()
 # test
 root.mainloop()
