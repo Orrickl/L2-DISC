@@ -25,14 +25,23 @@ def sign_in():
     main_menu.grid_forget()
 
 
-# dsfgd
+def log_in(username, password):
+    if validate_user_credentials(username, password) == True:
+        read("{username}.txt", "read()")
+        # dsfgd
+
+
 def validate_user_credentials(username, password):
-    for i in range(len(read("Usernames.txt"))):
-        if username != read("Usernames.txt")[i]:
+    print(username)
+    print(read("Usernames.txt", ".readlines()")[0])
+    for i in range(len(read("Usernames.txt", ".readlines()"))):
+        print(i)
+        if username == read("Usernames.txt", ".readlines()")[i]:
             password_number = i
-            if password == read("Passwords.txt")[password_number-1]:
+            if password == read("Passwords.txt", ".readlines()")[password_number]:
                 print("correct")
-                return "correct"
+                open_popup("correct", "lets go")
+                return True
             open_popup("Unknown Password", "error")
             return "h"
         open_popup("Unknown Username", "error")
@@ -53,11 +62,10 @@ def write(info_to_write, file_to_write_to):
         file_to_open.write(info_to_write)
 
 
-def read(file_to_read):
+def read(file_to_read, mode):
     """opens a file and reads and prints it"""
     with open(file_to_read, "r", encoding="utf-8") as f:
-        contents = f.readlines()
-        # print(contents)
+        contents = f.mode
     return contents
 
 
@@ -82,12 +90,14 @@ UsernameStringVar = StringVar()
 EntryBox1 = Entry(signIn_menu, textvariable=UsernameStringVar, width=20)
 EntryBox1.grid(row=0, column=2)
 
+
 PasswordStringVar = StringVar()
 EntryBox2 = Entry(signIn_menu, textvariable=PasswordStringVar, width=20)
 EntryBox2.grid(row=2, column=2)
 
+
 SubmitInformationButton = Button(signIn_menu, text="Submit", activebackground="pink", activeforeground="blue",
-                                 command=lambda: validate_user_credentials(UsernameStringVar, PasswordStringVar))
+                                 command=lambda: log_in(UsernameStringVar.get(), PasswordStringVar.get()))
 SubmitInformationButton.grid(row=3, column=2)
 
 SignInMenu_button = Button(main_menu, text="Yes!", font="Helvetica 15",
