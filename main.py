@@ -16,16 +16,8 @@ main_menu.configure(bg="light steel blue")
 main_menu.grid(row=0, column=0)
 
 
-SignInMenu_button = Button(main_menu, text="Yes!", font="Helvetica 15",
-                           command=lambda: Sign_In())
-SignInMenu_button.grid(row=3, column=0, pady=50)
-
-SignIn_button = Button(main_menu, text="Sign in", font="Helvetica 15",
-                       command=lambda: Sign_In())
-SignIn_button.grid(row=3, column=0, pady=50)
-
-
-def Sign_In():
+# fdgdfg
+def sign_in():
     global signIn_menu
     # gives the bingo menu a location on the screen, so it is visible
     signIn_menu.grid(row=0, column=0)
@@ -33,28 +25,24 @@ def Sign_In():
     main_menu.grid_forget()
 
 
-def ValidateUserCredentials(username, password):
-    usernamefound = False
-    while usernamefound == False:
-        print("bad")
-        for i in range(len(read("Usernames.txt"))):
-
-            if username != read("Usernames.txt")[i]:
-                password_number = i
-                if password == read("Passwords.txt")[password_number]:
-                    usernamefound = True
-                    return ("correct")
-                else:
-                    open_popup("Unknown Password", "error")
-                    break
-            else:
-                open_popup("Unknown Username", "error")
-                break
+# dsfgd
+def validate_user_credentials(username, password):
+    for i in range(len(read("Usernames.txt"))):
+        if username != read("Usernames.txt")[i]:
+            password_number = i
+            if password == read("Passwords.txt")[password_number-1]:
+                print("correct")
+                return "correct"
+            open_popup("Unknown Password", "error")
+            return "h"
+        open_popup("Unknown Username", "error")
+        return "h"
 
 
+# dsfgdfg
 def open_popup(message, title):
     top = Toplevel(root)
-    top.geometry("750x250")
+    top.geometry("220x50")
     top.title(title)
     Label(top, text=message).grid(row=1, column=1)
 
@@ -69,38 +57,47 @@ def read(file_to_read):
     """opens a file and reads and prints it"""
     with open(file_to_read, "r", encoding="utf-8") as f:
         contents = f.readlines()
-        print(contents)
-        print(len(contents))
-    return (contents)
+        # print(contents)
+    return contents
 
 
-write("", "Passwords.txt")
-write("", "Usernames.txt")
+write("P", "Passwords.txt")
+write("U", "Usernames.txt")
 
 
 # defining and configuring the outcome frame
 signIn_menu = Frame(root)
 signIn_menu.grid(row=0, column=0)
 signIn_menu.grid_forget()
+# ejrdkjrhg
 
 
 UsernameLabel = Label(signIn_menu, text="Username")
 UsernameLabel.grid(row=0, column=0)
 # creating label
 PasswordLabel = Label(signIn_menu, text="Password")
-PasswordLabel.grid(row=1, column=0)
+PasswordLabel.grid(row=2, column=0)
 
 UsernameStringVar = StringVar()
 EntryBox1 = Entry(signIn_menu, textvariable=UsernameStringVar, width=20)
-EntryBox1.grid(row=0, column=3)
+EntryBox1.grid(row=0, column=2)
 
 PasswordStringVar = StringVar()
 EntryBox2 = Entry(signIn_menu, textvariable=PasswordStringVar, width=20)
-EntryBox2.grid(row=2, column=3)
+EntryBox2.grid(row=2, column=2)
 
 SubmitInformationButton = Button(signIn_menu, text="Submit", activebackground="pink", activeforeground="blue",
-                                 command=lambda: ValidateUserCredentials(UsernameStringVar, PasswordStringVar))
+                                 command=lambda: validate_user_credentials(UsernameStringVar, PasswordStringVar))
 SubmitInformationButton.grid(row=3, column=2)
+
+SignInMenu_button = Button(main_menu, text="Yes!", font="Helvetica 15",
+                           command=lambda: sign_in())
+SignInMenu_button.grid(row=3, column=0, pady=50)
+
+SignIn_button = Button(main_menu, text="Sign in", font="Helvetica 15",
+                       command=lambda: sign_in())
+SignIn_button.grid(row=3, column=0, pady=50)
+
 
 # test
 root.mainloop()
