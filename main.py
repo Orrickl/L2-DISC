@@ -27,12 +27,14 @@ def sign_in():
 
 def log_in(username, password):
     if validate_user_credentials(username, password) == True:
-        read("{username}.txt", "read()")
+        with open(username + ".txt", r, encoding="utf-8") as username_data_file:
+        username_data_file.readlines()
         # dsfgd
 
 
 def validate_user_credentials(username, password):
     print(username)
+    print(read("Usernames.txt", ".readlines()")[0])
     print(read("Usernames.txt", ".readlines()")[0])
     for i in range(len(read("Usernames.txt", ".readlines()"))):
         print(i)
@@ -43,9 +45,9 @@ def validate_user_credentials(username, password):
                 open_popup("correct", "lets go")
                 return True
             open_popup("Unknown Password", "error")
-            return "h"
+            return False
         open_popup("Unknown Username", "error")
-        return "h"
+        return False
 
 
 # dsfgdfg
