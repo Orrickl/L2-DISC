@@ -27,8 +27,7 @@ def sign_in():
 
 def log_in(username, password):
     if validate_user_credentials(username, password) == True:
-        with open(username + ".txt", r, encoding="utf-8") as username_data_file:
-        username_data_file.readlines()
+        outcome_statement(username, password)
         # dsfgd
 
 
@@ -64,11 +63,14 @@ def write(info_to_write, file_to_write_to):
         file_to_open.write(info_to_write)
 
 
-def read(file_to_read, mode):
+def read(file_to_read, *mode):
     """opens a file and reads and prints it"""
     with open(file_to_read, "r", encoding="utf-8") as f:
-        contents = f.mode
+        contents = f.readlines() if mode == "readlines()" else f.read()
     return contents
+
+def outcome_statement(Username, password):
+    
 
 
 write("P", "Passwords.txt")
