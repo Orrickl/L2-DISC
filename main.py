@@ -1,5 +1,5 @@
 from tkinter import *
-
+username = str()
 UsernameList = []
 linelist = []
 
@@ -33,21 +33,27 @@ def log_in(username, password):
 
 
 def validate_user_credentials(username, password):
-    print(username)
-    print(read("Usernames.txt", ".readlines()")[0])
-    print(read("Usernames.txt", ".readlines()")[0])
-    for i in range(len(read("Usernames.txt", ".readlines()"))):
-        print(i)
+    
+    if read("Usernames.txt", ".readlines()")[1] == read("Passwords.txt", ".readlines()")[1]:
+        print("why")
+    with open(file= "Usernames.txt", mode= "r") as f:
+        fr = f.readlines()
+        print(fr)
+    line_count = sum(1 for x in open("Usernames.txt", "r"))
+
+    for i in range(line_count+1):
+        print(read("Usernames.txt", ".readlines()")[i])
         if username == read("Usernames.txt", ".readlines()")[i]:
             password_number = i
+            
             if password == read("Passwords.txt", ".readlines()")[password_number]:
                 print("correct")
                 open_popup("correct", "lets go")
                 return True
             open_popup("Unknown Password", "error")
             return False
-        open_popup("Unknown Username", "error")
-        return False
+    open_popup("Unknown Username", "error")
+    return False
 
 
 # dsfgdfg
@@ -73,12 +79,13 @@ def read(file_to_read, *mode):
 def outcome_statement(Username, password):
     outcome_menu.grid(row=0, column=0)
 
-def update_grid(entry_name_var):
-    write(entry_name_var, )
-
-
-write("P", "Passwords.txt")
-write("U", "Usernames.txt")
+def update_grid(text_amount_var, entry_name_var, username):
+    text_amount = text_amount_var
+    text_amount = str()
+    entry_name = entry_name_var
+    entry_name = str()
+    write(text_amount + entry_name, username + "-has")
+    print(read(username + "-has"))
 
 
 # defining and configuring the outcome frame
@@ -97,8 +104,8 @@ entry_name_var = StringVar()
 
 entry_name_var.set('placeholder')
 
-entry_name = Entry(outcome_menu, textvariable=entry_name_var)
-entry_name.grid(row = 0, column = 0)
+entry_name_entry = Entry(outcome_menu, textvariable=entry_name_var)
+entry_name_entry.grid(row = 0, column = 0)
 
 text_amount_var = StringVar()
 
@@ -107,7 +114,7 @@ text_amount_var.set('1')
 text_amount_entry = Entry(outcome_menu, textvariable=text_amount_var)
 text_amount_entry.grid(row = 0, column = 1)
 
-update_button = Button(outcome_menu, command=update_grid(entry_name_var, username))
+update_button = Button(outcome_menu, command=update_grid(text_amount_var, entry_name_var, username), text= "")
 update_button.grid(row= 2, column= 1)
 
 
