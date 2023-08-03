@@ -27,6 +27,7 @@ def sign_in():
 
 def log_in(username, password):
     if validate_user_credentials(username, password) == True:
+        signIn_menu.grid_forget()
         outcome_statement(username, password)
         # dsfgd
 
@@ -70,7 +71,10 @@ def read(file_to_read, *mode):
     return contents
 
 def outcome_statement(Username, password):
-    
+    outcome_menu.grid(row=0, column=0)
+
+def update_grid(entry_name_var):
+    write(entry_name_var, )
 
 
 write("P", "Passwords.txt")
@@ -82,6 +86,29 @@ signIn_menu = Frame(root)
 signIn_menu.grid(row=0, column=0)
 signIn_menu.grid_forget()
 # ejrdkjrhg
+
+
+outcome_menu = Frame(root)
+outcome_menu.grid(row=0, column=0)
+outcome_menu.grid_forget()
+# ejrdkjrhg
+
+entry_name_var = StringVar()
+
+entry_name_var.set('placeholder')
+
+entry_name = Entry(outcome_menu, textvariable=entry_name_var)
+entry_name.grid(row = 0, column = 0)
+
+text_amount_var = StringVar()
+
+text_amount_var.set('1')
+
+text_amount_entry = Entry(outcome_menu, textvariable=text_amount_var)
+text_amount_entry.grid(row = 0, column = 1)
+
+update_button = Button(outcome_menu, command=update_grid(entry_name_var, username))
+update_button.grid(row= 2, column= 1)
 
 
 UsernameLabel = Label(signIn_menu, text="Username")
@@ -111,7 +138,6 @@ SignInMenu_button.grid(row=3, column=0, pady=50)
 SignIn_button = Button(main_menu, text="Sign in", font="Helvetica 15",
                        command=lambda: sign_in())
 SignIn_button.grid(row=3, column=0, pady=50)
-
 
 # test
 root.mainloop()
