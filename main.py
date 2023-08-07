@@ -33,27 +33,31 @@ def log_in(username, password):
 
 
 def validate_user_credentials(username, password):
-    
-    if read("Usernames.txt", ".readlines()")[1] == read("Passwords.txt", ".readlines()")[1]:
-        print("why")
-    with open(file= "Usernames.txt", mode= "r") as f:
-        fr = f.readlines()
-        print(fr)
-    line_count = sum(1 for x in open("Usernames.txt", "r"))
 
-    for i in range(line_count+1):
-        print(read("Usernames.txt", ".readlines()")[i])
-        if username == read("Usernames.txt", ".readlines()")[i]:
-            password_number = i
-            
-            if password == read("Passwords.txt", ".readlines()")[password_number]:
-                print("correct")
-                open_popup("correct", "lets go")
-                return True
-            open_popup("Unknown Password", "error")
-            return False
-    open_popup("Unknown Username", "error")
-    return False
+
+
+
+    with open(file= "Passwords.txt", mode= "r") as password_reading_file:
+        read_password_file = password_reading_file.readlines()
+        print(read_password_file)
+        with open(file= "Usernames.txt", mode= "r") as username_reading_file:
+            read_username_file = username_reading_file.readlines()
+            print(read_username_file)
+
+            for i in range(len(read_username_file)):
+                if username == read_username_file[i].strip():
+                    password_number = i
+
+                    if password == read_password_file[password_number].strip():
+                        print("correct")
+                        open_popup("correct", "lets go")
+                        return True
+                    if i == len(read_username_file)-1:
+                        open_popup("Unknown Password", "error")
+                        return False
+                if i == len(read_username_file)-1:
+                    open_popup("Unknown Username", "error")
+                    return False
 
 
 # dsfgdfg
